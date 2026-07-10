@@ -5,6 +5,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +14,7 @@ import jakarta.persistence.GenerationType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
-
+import java.util.List;
 
 @Entity
 @Table(name = "articulos")
@@ -35,15 +37,24 @@ public class ArticuloModel {
     @JsonIgnoreProperties("articulos")
     private CategoriaModel categoria;
 
+    @ManyToMany
+    @JoinTable(
+    name = "articulos_proveedores",
+    joinColumns = @JoinColumn(name = "articulo_id"),
+    inverseJoinColumns = @JoinColumn(name = "proveedor_id")
+    )
+    private List<ProveedorModel> proveedores;
+
     public ArticuloModel(){
 
     }
 
-    public ArticuloModel(Long id, String nombre, Double precio, CategoriaModel categoria){
+    public ArticuloModel(Long id, String nombre, Double precio, CategoriaModel categoria, List<ProveedorModel> proveedores){
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
+        this.proveedores = proveedores;
     }
 
     public Long getId(){
@@ -70,6 +81,20 @@ public class ArticuloModel {
         this.precio = precio;
     }
 
-    public CategoriaModel getCategoria() { return categoria; }
-    public void setConcentria(CategoriaModel categoria) { this.categoria = categoria; }
+    public CategoriaModel getCategoria(){
+        return categoria; 
+    }
+
+    public void setConcentria(CategoriaModel categoria){ 
+        this.categoria = categoria; 
+    }
+
+    public List<ProveedorModel> getProveedores(){
+        return proveedores;
+    }
+
+    public void setProveedores(List<ProveedorModel> proveedores){
+        this.proveedores = proveedores;
+    }
+
 }
