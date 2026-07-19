@@ -1,8 +1,10 @@
 package com.talento.articulos.controller;
 
 import com.talento.articulos.model.ArticuloModel;
-import com.talento.articulos.model.CategoriaModel;
+import com.talento.articulos.model.ArticuloDTO;
 import com.talento.articulos.service.ArticuloService;
+import com.talento.articulos.service.ArticuloServiceImpl;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +15,9 @@ import java.util.List;
 @RequestMapping("/api/articulos")
 public class ArticuloController {
 
-    private final ArticuloService articuloService;
+    private final ArticuloServiceImpl articuloService;
 
-    public ArticuloController(ArticuloService articuloService){
+    public ArticuloController(ArticuloServiceImpl articuloService){
         this.articuloService = articuloService;
     }
     
@@ -25,34 +27,35 @@ public class ArticuloController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArticuloModel> obtenerPorId(@PathVariable Long id){
-        return articuloService.obtenerArticuloPorId(id)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ArticuloDTO> obtenerPorId(@PathVariable Long id){
+        
+        ArticuloDTO articuloDTO = articuloService.obtenerArticuloPorId(id);
+    
+        return ResponseEntity.ok(articuloDTO);
     }
 
     @PostMapping
-    public ArticuloModel crear(@RequestBody ArticuloModel articulo, CategoriaModel categoria){
-        return articuloService.guardarArticulo(articulo, categoria);
+    public ArticuloModel crear(@RequestBody ArticuloModel articulo){
+        return articuloService.guardarArticulo(articulo);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ArticuloModel> actualizar(@PathVariable Long id, @RequestBody ArticuloModel articulo){
-        if(articuloService.obtenerArticuloPorId(id).isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    // @PutMapping("/{id}")
+    // public ResponseEntity<ArticuloDTO> actualizar(@PathVariable Long id, @RequestBody ArticuloDTO articulo){
+    //     if(articuloService.obtenerArticuloPorId(id).isEmpty()){
+    //         return ResponseEntity.ok(articuloDTO);
+    //     }
 
-        ArticuloModel articuloActualizado = articuloService.actualizarArticulo(id, articulo);
-        return ResponseEntity.ok(articuloActualizado);
-    }
+    //     ArticuloDTO articuloActualizado = articuloService.actualizarArticulo(id, articulo);
+    //     return ResponseEntity.ok(articuloActualizado);
+    // }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id){
-        if(articuloService.obtenerArticuloPorId(id).isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> eliminar(@PathVariable Long id){
+    //     if(articuloService.obtenerArticuloPorId(id).isEmpty()){
+    //         return ResponseEntity.notFound().build();
+    //     }
 
-        articuloService.eliminarArticulo(id);
-        return ResponseEntity.noContent().build();
-    }
+    //     articuloService.eliminarArticulo(id);
+    //     return ResponseEntity.noContent().build();
+    // }
 }

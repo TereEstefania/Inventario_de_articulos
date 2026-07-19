@@ -12,10 +12,10 @@ public interface ArticuloService {
     List<ArticuloModel> listarArticulos();
 
     //Busca un articulo por su id
-    Optional<ArticuloModel> obtenerArticuloPorId(Long id);
+    //Optional<ArticuloModel> obtenerPorId(Long id);
 
     //Guarda un nuevo articulo
-    ArticuloModel guardarArticulo(ArticuloModel articulo, CategoriaModel categoria);
+    ArticuloModel guardarArticulo(ArticuloModel articulo);
 
     //Actualiza un articulo existente 
     ArticuloModel actualizarArticulo(Long id, ArticuloModel articulo);

@@ -14,6 +14,8 @@ import jakarta.persistence.GenerationType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,7 +34,7 @@ public class ArticuloModel {
     private Double precio;
 
 
-    @ManyToOne(fetch = FetchType.LAZY) // LAZY por rendimiento, carga la categoría solo si la necesitas
+    @ManyToOne // LAZY por rendimiento, carga la categoría solo si la necesitas
     @JoinColumn(name = "categoria_id", nullable = false) // Define el nombre de la FK en la BD
     @JsonIgnoreProperties("articulos")
     private CategoriaModel categoria;
@@ -43,18 +45,16 @@ public class ArticuloModel {
     joinColumns = @JoinColumn(name = "articulo_id"),
     inverseJoinColumns = @JoinColumn(name = "proveedor_id")
     )
-    private List<ProveedorModel> proveedores;
+    private List<ProveedorModel> proveedores = new ArrayList<>();
 
     public ArticuloModel(){
 
     }
 
-    public ArticuloModel(Long id, String nombre, Double precio, CategoriaModel categoria, List<ProveedorModel> proveedores){
-        this.id = id;
+    public ArticuloModel(String nombre, Double precio, CategoriaModel categoria){
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
-        this.proveedores = proveedores;
     }
 
     public Long getId(){
@@ -85,7 +85,7 @@ public class ArticuloModel {
         return categoria; 
     }
 
-    public void setConcentria(CategoriaModel categoria){ 
+    public void setCategoria(CategoriaModel categoria){ 
         this.categoria = categoria; 
     }
 

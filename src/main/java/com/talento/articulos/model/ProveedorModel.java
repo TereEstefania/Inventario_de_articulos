@@ -6,9 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,16 +25,15 @@ public class ProveedorModel {
     @Column(name =  "nombre", nullable = false, length = 200)
     private String nombre;
 
-    @ManyToMany(mappedBy = "proveedores", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "proveedores")
     @JsonIgnoreProperties("proveedores")
-    private List<ArticuloModel> articulos;
+    private List<ArticuloModel> articulos = new ArrayList<>();
 
     public ProveedorModel(){
 
     }
 
-    public ProveedorModel(Long id, String nombre){
-        this.id = id;
+    public ProveedorModel(String nombre){
         this.nombre = nombre;
     }
 

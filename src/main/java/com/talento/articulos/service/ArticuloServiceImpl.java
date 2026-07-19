@@ -1,8 +1,12 @@
 package com.talento.articulos.service;
 
+import com.talento.articulos.model.ArticuloDTO;
 import com.talento.articulos.model.ArticuloModel;
 import com.talento.articulos.model.CategoriaModel;
+import com.talento.articulos.service.ArticuloMapper;
 import com.talento.articulos.repository.ArticuloRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +15,11 @@ import java.util.Optional;
 @Service
 public class ArticuloServiceImpl implements ArticuloService{
     
-    private final ArticuloRepository articuloRepository;
+    @Autowired
+    private ArticuloRepository articuloRepository;
+
+    @Autowired
+    private ArticuloMapper articuloMapper;
 
     public ArticuloServiceImpl(ArticuloRepository articuloRepository){
         this.articuloRepository = articuloRepository;
@@ -22,13 +30,16 @@ public class ArticuloServiceImpl implements ArticuloService{
         return articuloRepository.findAll();
     }
 
-    @Override
-    public Optional<ArticuloModel> obtenerArticuloPorId(Long id){
-        return articuloRepository.findById(id);
+    
+    public ArticuloDTO obtenerArticuloPorId(Long id){
+        ArticuloModel articulo = articuloRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("No encontrado"));
+            
+        return articuloMapper.toDTO(articulo);
     }
 
     @Override
-    public ArticuloModel guardarArticulo(ArticuloModel articulo, CategoriaModel categoria){
+    public ArticuloModel guardarArticulo(ArticuloModel articulo){
         return articuloRepository.save(articulo);
     }
 
