@@ -1,11 +1,9 @@
 package com.talento.articulos.service;
 
-import com.talento.articulos.model.ArticuloDTO;
-import com.talento.articulos.model.ArticuloModel;
-import com.talento.articulos.model.CategoriaModel;
+import com.talento.articulos.model.*;
 
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
 public interface ArticuloService {
     
@@ -16,7 +14,7 @@ public interface ArticuloService {
     //Optional<ArticuloModel> obtenerPorId(Long id);
 
     //Guarda un nuevo articulo
-    ArticuloModel guardarArticulo(ArticuloModel articulo);
+    ArticuloDTO guardarArticulo(ArticuloCreateDTO articulo);
 
     //Actualiza un articulo existente 
     ArticuloModel actualizarArticulo(Long id, ArticuloModel articulo);

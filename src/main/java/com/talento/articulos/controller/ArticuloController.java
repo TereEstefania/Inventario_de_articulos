@@ -1,10 +1,12 @@
 package com.talento.articulos.controller;
 
 import com.talento.articulos.model.ArticuloModel;
+import com.talento.articulos.model.ArticuloCreateDTO;
 import com.talento.articulos.model.ArticuloDTO;
 import com.talento.articulos.service.ArticuloService;
 import com.talento.articulos.service.ArticuloServiceImpl;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,11 +36,12 @@ public class ArticuloController {
         return ResponseEntity.ok(articuloDTO);
     }
 
-    @PostMapping
-    public ArticuloModel crear(@RequestBody ArticuloModel articulo){
-        return articuloService.guardarArticulo(articulo);
+   @PostMapping
+    public ResponseEntity<ArticuloDTO> crear(@RequestBody ArticuloCreateDTO dto) {
+     ArticuloDTO nuevoArticulo = articuloService.guardarArticulo(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoArticulo);
     }
-
+/* */
     // @PutMapping("/{id}")
     // public ResponseEntity<ArticuloDTO> actualizar(@PathVariable Long id, @RequestBody ArticuloDTO articulo){
     //     if(articuloService.obtenerArticuloPorId(id).isEmpty()){
