@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
 @Service
 public class ArticuloServiceImpl implements ArticuloService{
@@ -26,8 +26,10 @@ public class ArticuloServiceImpl implements ArticuloService{
     }
  
     @Override
-    public List<ArticuloModel> listarArticulos(){
-        return articuloRepository.findAll();
+    public List<ArticuloDTO> listarArticulos(){
+        List<ArticuloModel> articulos = articuloRepository.findAll();
+
+        return articuloMapper.toDTOList(articulos);
     }
 
     

@@ -1,5 +1,6 @@
 package com.talento.articulos.service;
 
+import com.talento.articulos.model.ArticuloDTO;
 import com.talento.articulos.model.ArticuloModel;
 import com.talento.articulos.model.CategoriaModel;
 
@@ -9,7 +10,7 @@ import java.util.Optional;
 public interface ArticuloService {
     
     //Devuelve la lista completa de articulos
-    List<ArticuloModel> listarArticulos();
+    List<ArticuloDTO> listarArticulos();
 
     //Busca un articulo por su id
     //Optional<ArticuloModel> obtenerPorId(Long id);

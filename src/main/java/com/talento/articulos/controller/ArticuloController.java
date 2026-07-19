@@ -22,7 +22,7 @@ public class ArticuloController {
     }
     
     @GetMapping
-    public List<ArticuloModel> listar(){
+    public List<ArticuloDTO> listar(){
         return articuloService.listarArticulos();
     }
 

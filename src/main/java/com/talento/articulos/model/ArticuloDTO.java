@@ -6,6 +6,6 @@ public record ArticuloDTO(
     Long id,
     String nombre,
     Double precio,
-    String nombreCategoria,
-    List<String> nombresProveedores
+    String categoria,
+    List<String> proveedores
 ) {}

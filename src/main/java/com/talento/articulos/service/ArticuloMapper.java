@@ -11,9 +11,13 @@ import java.util.List;
 @Mapper(componentModel = "spring") // Lo registra como un Bean de Spring
 public interface ArticuloMapper {
 
-    @Mapping(source = "categoria.nombre", target = "nombreCategoria")
-    @Mapping(source = "proveedores", target = "nombresProveedores", qualifiedByName = "mapProveedores")
+    @Mapping(source = "categoria.nombre", target = "categoria")
+    @Mapping(source = "proveedores", target = "proveedores", qualifiedByName = "mapProveedores")
     ArticuloDTO toDTO(ArticuloModel articulo);
+
+    @Mapping(source = "categoria.nombre", target = "categoria")
+    @Mapping(source = "proveedores", target = "proveedores", qualifiedByName = "mapProveedores")
+    List<ArticuloDTO> toDTOList(List<ArticuloModel> articulo);
 
     // Método de ayuda para extraer solo los nombres de la lista de proveedores
     @Named("mapProveedores")
